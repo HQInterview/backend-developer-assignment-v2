@@ -17,7 +17,7 @@ class AuctionController extends Controller
      */
     public function index()
     {   
-        $auctions = Auction::active()->timeAvailable()->orderBy('created_at', 'desc');
+        $auctions = Auction::active()->timeAvailable()->orderBy('unavailable_at', 'desc')->get();
         return view('auction.index', compact('auctions'));
     }
 
@@ -39,9 +39,9 @@ class AuctionController extends Controller
      */
     public function store(StoreAuctionRequest $request)
     {
-        Auth::user()->auctions()->create($request->all());
+        $auction = Auth::user()->auctions()->create($request->all());
         
-        return redirect()->route('auction.index')
+        return redirect()->route('auction.show', [$auction->id])
                             ->with('flash_message', 'Your auction has been successfully created!');
     }
 

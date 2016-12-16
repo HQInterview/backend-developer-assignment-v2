@@ -26,6 +26,7 @@ class StoreAuctionRequest extends FormRequest
         return [
             'name'        => 'required',
             'description' => 'required',
+            'min_bids' => 'required|numeric',
         ];
     }
 }
