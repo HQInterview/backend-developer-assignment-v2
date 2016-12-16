@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'callback'
     ];
 
     /**
@@ -26,4 +26,22 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    /**
+    * Get the User Auctions.
+    */
+    public function auctions()
+    {
+        return $this->hasMany('App\Auction');
+    }
+
+
+    /**
+    * Get the User Bids.
+    */
+    public function bids()
+    {
+        return $this->hasMany('App\Bid');
+    }
 }
