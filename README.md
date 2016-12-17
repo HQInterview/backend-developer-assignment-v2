@@ -21,8 +21,6 @@ Install the dependencies and devDependencies and start the server.
 ```sh
 $ cd project-auction
 $ composer update
-$ php artisan migrate
-$ php artisan serv
 ```
 
 rename `.env.example` file to `.env` 
@@ -56,6 +54,12 @@ in opened crontab add this line:
 
 ` * * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1`
 
+
+At the end run these command to finish installation:
+```
+$ php artisan migrate
+$ php artisan serv
+```
 
 ### Auction Artisan Command
 
