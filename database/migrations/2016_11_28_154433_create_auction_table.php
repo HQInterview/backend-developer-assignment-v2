@@ -21,6 +21,7 @@ class CreateAuctionTable extends Migration
             $table->foreign('user_id')->references('id')
                                         ->on('users')->onDelete('cascade');
             $table->integer('min_bids');
+            $table->boolean('active');
             $table->timestamps();
             $table->timestamp('unavailable_at');
         });
