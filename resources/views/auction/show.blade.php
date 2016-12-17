@@ -28,7 +28,7 @@
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
-					<th>UserID</th>
+					<th>User Name</th>
 					<th>Price</th>
 					<th>Name</th>
 				</tr>

@@ -9,7 +9,7 @@ class Auction extends Model
 {   
 
        // Mass assignment fields fillable
-	protected $fillable = ['name', 'description'];
+	protected $fillable = ['name', 'description', 'min_bids'];
 
 
      /**
@@ -63,6 +63,17 @@ class Auction extends Model
         return $query->where('unavailable_at', '>=' , $now);
     }
 
+    /**
+     * query scope for auctions was finished
+     * @param  Object $query current query
+     * @return Object        model query
+     */
+    public function scopeFinished($query)
+    {
+        $now = Carbon::now();
+        return $query->where('unavailable_at', '<' , $now);
+    }
+
 
     /**
      * add extra time to auction have only 60sec
@@ -89,5 +100,14 @@ class Auction extends Model
        $this->active = false;
        return $this->save();
    }
+    /**
+     * check for auction that have
+     * valid bid on min_bids field
+     */
+    public function minBidsAvailable()
+    {
+       return ($this->min_bids <= $this->bids->count());
+    }
+
 
 }
