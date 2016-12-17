@@ -20,7 +20,7 @@
 
 <script>
 
-   export default {
+ export default {
     props: {
         date: {
             type: String,
@@ -42,22 +42,24 @@
         },
 
         minutes() {
-         var minutes = Math.trunc((this.remainDateValue - this.now) / 60) % 60;
-         if ( minutes >= 0  )
+           var minutes = Math.trunc((this.remainDateValue - this.now) / 60) % 60;
+           if ( minutes >= 0  )
             return Math.trunc((this.remainDateValue - this.now) / 60) % 60;
         else
             return 0;
     },
-    // change date to numbers
+    // change given date to numbers
     remainDateValue() {
         return Math.trunc(Date.parse(this.date) / 1000);
     },
 
 },
 created () {
-    // change now time every one second
+    // get UTC time every 1 second 
     window.setInterval(() => {
-        this.now = Math.trunc((new Date()).getTime() / 1000);
+        
+        this.now = new Date(Date.now()+(new Date().getTimezoneOffset()*60000)).getTime()/1000|0;
+        
     },1000);
 },
 filters:{
