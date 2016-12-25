@@ -8,6 +8,7 @@ Route::group(['middleware' => 'auth'], function() {
 
 	// post bid to asuction route
 	Route::post('auction/{auctionId}/bid', ['uses' => 'BidController@store', 'as' => 'bid.store']);
+	Route::get('auction/bid/{id}', ['uses' => 'BidController@show', 'as' => 'bid.show']);
 
 	// profile routes
 	Route::get('profile', ['uses' => 'Auth\AccountController@edit','as' => 'profile.edit']);

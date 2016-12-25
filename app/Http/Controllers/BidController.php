@@ -36,11 +36,20 @@ class BidController extends Controller
                                  ->with('flash_message', 'Your bid has been successfully created!'); 
 
         } else {
-            return back()->withErrors($bid->errors())
-                        ->withInput();
+            return back()->withErrors($bid->errors())->withInput();
         }
         
 
+    }
+
+    public function show(int $bidId)
+    {
+        $bid = Bid::findOrfail($bidId);
+        if ($bid->user_id == Auth::user()->id) {
+            return view('bid.show', compact('bid'));
+        }            
+        return abort(401, 'Not authorized');
+        
     }
 
 
