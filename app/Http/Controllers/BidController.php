@@ -17,28 +17,29 @@ class BidController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-        public function store(Request $request, $id)
-        {
+    public function store(Request $request, $id)
+    {
 
-           $auction = Auction::timeAvailable()->active()->where('id', $id)->firstOrFail();
-           $bid = new Bid($request->all());
-           if ($bid->validate($request->all(), $auction)){
+     $auction = Auction::timeAvailable()->active()->where('id', $id)->firstOrFail();
+     $bid = new Bid($request->all());
+     if ($bid->validate($request->all(), $auction)){
 
             // save bid and set relations
-            $bid->user()->associate(Auth::user());
-            $bid->auction()->associate($auction);
-            $bid->save();
+        $bid->user()->associate(Auth::user());
+        $bid->auction()->associate($auction);
+        $bid->save();
 
             // add extra minute to auction on last minute
-            $auction->addMinute();
+        $auction->addExtraMinute();
+        $auction->save();
 
-            return redirect()->route('auction.show', ['id' => $id])
-                                 ->with('flash_message', 'Your bid has been successfully created!'); 
+        return redirect()->route('auction.show', ['id' => $id])
+                             ->with('flash_message', 'Your bid has been successfully created!'); 
 
-        } else {
-            return back()->withErrors($bid->errors())->withInput();
-        }
-        
+          } else {
+                return back()->withErrors($bid->errors())->withInput();
+       }
+
 
     }
 

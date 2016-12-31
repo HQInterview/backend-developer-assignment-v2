@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Auction extends Model
 {   
 
-       // Mass assignment fields fillable
-	protected $fillable = ['name', 'description', 'min_bids'];
+     // Mass assignment fields fillable
+     protected $fillable = ['name', 'description', 'min_bids', 'active', 'user_id'];
 
 
      /**
@@ -18,10 +18,10 @@ class Auction extends Model
      * @var array
      */
      protected $dates = [
-     'created_at',
-     'updated_at',
-     'unavailable_at'
-     ]; 
+                     'created_at',
+                     'updated_at',
+                     'unavailable_at'
+                        ]; 
 
     /**
     * Get the auction associated user.
@@ -53,21 +53,22 @@ class Auction extends Model
 
 
     /**
-     * query scope for auctions have times
-     * @param  Object $query current query
-     * @return Object        model query
-     */
+    * query scope for auctions have times
+    * @param  Object $query current query
+    * @return Object        model query
+    */
     public function scopeTimeAvailable($query)
     {
         $now = Carbon::now();
         return $query->where('unavailable_at', '>=' , $now);
     }
 
+
     /**
-     * query scope for auctions was finished
-     * @param  Object $query current query
-     * @return Object        model query
-     */
+    * query scope for auctions was finished
+    * @param  Object $query current query
+    * @return Object        model query
+    */
     public function scopeFinished($query)
     {
         $now = Carbon::now();
@@ -76,37 +77,38 @@ class Auction extends Model
 
 
     /**
-     * add extra time to auction have only 60sec
-     * left to bid for prevent last second bid
-     */
-    public function addMinute()
+    * add extra time to auction have only 60sec
+    * left to bid for prevent last second bid
+    */
+    public function addExtraMinute()
     {
         $diff = Carbon::now()->diffInSeconds($this->unavailable_at, false);
 
         if ( $diff > 0 && $diff <= 60){
-
             $this->unavailable_at = $this->unavailable_at->addMinute();
-            return $this->save();
-
+            return true;
         }
+        return false;
     }
 
 
     /**
-     * deactive auction
-     */
+    * deactive auction
+    */
     public function deactive()
     {
        $this->active = false;
        return $this->save();
-   }
+    }
+
+
     /**
-     * check for auction that have
-     * valid bid on min_bids field
-     */
+    * check for auction that have
+    * valid bid on min_bids field
+    */
     public function minBidsAvailable()
     {
-       return ($this->min_bids <= $this->bids->count());
+     return ($this->min_bids <= $this->bids->count());
     }
 
 
