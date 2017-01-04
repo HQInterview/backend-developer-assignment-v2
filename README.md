@@ -70,3 +70,13 @@ $ php artisan auction:sendCallback
 ```
 
 command. it will be send to all finished active auction bids users callback.
+
+### App Test (TDD)
+
+To run TDD, in your app location run this command:
+
+```sh
+$ vendor/bin/phpunit
+```
+
+
