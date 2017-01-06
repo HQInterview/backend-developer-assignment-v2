@@ -113,10 +113,10 @@ class SendToUsersCallback extends Command
      */
     protected function submitWinnerCallback($auction)
     {
-        if (!empty($this->winner->user->callback)){
+        if (!is_null($this->winner->user->callback)){
             $price = $this->winner->price;
             $client = new \GuzzleHttp\Client();
-            $client->request('POST', $this->winner->callback, 
+            $client->request('POST', $this->winner->user->callback, 
                 [
                 'json' => [
                 'msg' => "Congratulation! Your $price bid was won the $auction->name!" ]
@@ -133,9 +133,9 @@ class SendToUsersCallback extends Command
     protected function submitLosersCallback($auction)
     {
         foreach ($this->losers as $loser) {
-            if (!empty($loser->user->callback)){
+            if (!is_null($loser->user->callback)){
                 $client = new \GuzzleHttp\Client();
-                $client->request('POST', $loser->callback, 
+                $client->request('POST', $loser->user->callback, 
                     [
                     'json' => [
                     'msg' => " Sorry Your $loser->price bid was not win the $auction->name!" ]
