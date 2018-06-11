@@ -17,6 +17,7 @@ gem "bootsnap", "1.3.0", require: false
 # gem "capistrano-rails", group: :development
 
 group :development, :test do
+  gem "rspec-rails", "3.7.2"
   gem "byebug", "10.0.2", platforms: [:mri, :mingw, :x64_mingw]
 end
 
@@ -30,4 +31,8 @@ end
 group :test do
   gem "capybara", "3.2.1"
   gem "poltergeist", "1.18.0"
+  gem "simplecov", "0.16.1"
+  gem "shoulda-matchers", "3.1.2"
+  gem "factory_bot", "4.8.2"
+  gem "database_cleaner", "1.7.0"
 end
