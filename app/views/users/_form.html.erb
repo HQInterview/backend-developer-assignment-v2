@@ -1,0 +1,7 @@
+<%= form_for (@user), class: "form-signin" do |f| %>
+  <%= f.text_field :email, class: "form-control", placeholder: "Email", autofocus: ""  %>
+  <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+  <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password" %>
+		<%= f.hidden_field :price_plan_id, value: 1 %>
+  <%= f.submit class: "btn btn-lg btn-dark btn-block", id: "submit_user" %>
+<% end %>

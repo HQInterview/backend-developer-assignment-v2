@@ -1,0 +1,16 @@
+<% title "Resend your Activation Email" %>
+
+<div class="row">
+  <div class="col-md-4">
+    <h2 class="form-signin-heading">Resend activation email</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <%= form_tag send_act_email_users_path, class: "form-signin" do %>
+      <%= text_field_tag "email", nil, class: "form-control", placeholder: "Email", autofocus: "" %>
+      <%= submit_tag "Resend activation email", class: "btn btn-lg btn-dark btn-block", id: "resend_activation" %>
+    <% end %>
+  </div>
+</div>

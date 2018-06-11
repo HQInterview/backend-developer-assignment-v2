@@ -1,0 +1,22 @@
+<% title "Login" %>
+
+<div class="row">
+  <div class="col-md-3">
+    <h2 class="form-signin-heading"><%= yield(:title) %></h2>
+      <%= form_tag create_session_users_path, class: "form-signin" do %>
+        <%= text_field_tag "email", nil, class: "form-control", placeholder: "Email", autofocus: "" %>
+	       <%= password_field_tag "password", nil, class: "form-control", placeholder: "Password" %>
+	       <%= label_tag nil, class: "checkbox" do %>
+	         <%= check_box_tag :remember %> keep me logged in
+	       <% end %>
+	       <%= submit_tag "Login", class: "btn btn-lg btn-dark btn-block", id: "login_user" %>
+      <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <%= link_to "Forgot password?", new_reset_password_users_path, class: "badge badge-light" %> |
+				<%= link_to "Resend activation email", new_act_email_users_path, class: "badge badge-light" %>
+  </div>
+</div>

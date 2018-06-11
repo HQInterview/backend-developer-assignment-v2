@@ -19,8 +19,8 @@ ActiveRecord::Migration.maintain_test_schema!
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 include Helpers
 # Sorcery helpers
-#include Sorcery::TestHelpers::Rails
-#include Sorcery::TestHelpers::Rails::Controller
+include Sorcery::TestHelpers::Rails
+include Sorcery::TestHelpers::Rails::Controller
 
 # Rspec congiguration
 RSpec.configure do |config|
