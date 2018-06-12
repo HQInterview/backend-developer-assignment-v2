@@ -28,6 +28,7 @@ group :development do
   gem "listen", "3.1.5"
   gem "spring", "2.0.2"
   gem "spring-watcher-listen", "2.0.1"
+  gem "letter_opener", "1.6.0"
 end
 
 group :test do
@@ -37,5 +38,4 @@ group :test do
   gem "shoulda-matchers", "3.1.2"
   gem "factory_bot", "4.8.2"
   gem "database_cleaner", "1.7.0"
-  gem "letter_opener", "1.6.0"
 end

@@ -1,6 +1,4 @@
-class UserMailer < ActionMailer::Base
-
-  default :from => "no-reply@urlmini.microweb10.com"
+class UserMailer < ApplicationMailer
 
   def activation_needed_email(user)
     @user = user
