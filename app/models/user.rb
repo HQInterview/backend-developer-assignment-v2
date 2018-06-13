@@ -28,8 +28,8 @@ class User < ApplicationRecord
 
   # constants
   #--------------------------------------------------------------
-  PASSWORD_LENGTH = 8
-  EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+  PASSWORD_LENGTH = 8.freeze
+  EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.freeze
 
   # authentication
   #--------------------------------------------------------------
