@@ -13,6 +13,7 @@ gem "turbolinks", "5.1.1"
 gem "jbuilder", "2.7.0"
 gem "bootsnap", "1.3.0", require: false
 gem "sorcery", "0.12.0"
+gem "faker", :git => "https://github.com/stympy/faker.git", :branch => "master"
 
 # Use Capistrano for deployment
 # gem "capistrano-rails", group: :development

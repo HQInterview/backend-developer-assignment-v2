@@ -18,4 +18,9 @@ module ApplicationHelper
     return res.html_safe
   end
 
+  # Return a Time objects in milliseconds
+  def time_in_milliseconds(time)
+    (time.to_f * 1000).to_i
+  end
+
 end

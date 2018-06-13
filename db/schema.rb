@@ -12,6 +12,19 @@
 
 ActiveRecord::Schema.define(version: 2018_06_11_200015) do
 
+  create_table "rooms", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "expires_at", null: false
+    t.integer "minimal_bid", null: false
+    t.integer "winner_bid", default: 0
+    t.integer "winner_bid_id"
+    t.string "winner_user_email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "amount_of_bids", default: 0
+    t.index ["expires_at"], name: "index_rooms_on_expires_at"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "crypted_password"

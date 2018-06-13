@@ -17,4 +17,6 @@
 //= require jquery-3.3.1.min
 //= require bootstrap.bundle.min
 //= require bootstrap.min
+//= require fakeTurbolinks
+//= require jquery.countdown.min
 //= require_tree .

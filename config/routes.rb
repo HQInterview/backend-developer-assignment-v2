@@ -21,4 +21,9 @@ Rails.application.routes.draw do
   get "register" => "users#new",             as: :register
   get "login"    => "users#new_session",     as: :login
   get "logout"   => "users#destroy_session", as: :logout
+
+  resources :rooms, only: [:index, :show]
+  resource :rooms, only: [] do
+    post :publish
+  end
 end
