@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root "site#welcome"
+  root "rooms#index"
 
   resources :users, only: [:new, :create] do
     get :activate, on: :member
