@@ -12,6 +12,7 @@ require "capybara/rails"
 require "capybara/rspec"
 require "rack/handler/puma"
 require "shoulda/matchers"
+require "faker"
 
 ActiveRecord::Migration.maintain_test_schema!
 
