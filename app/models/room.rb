@@ -31,11 +31,17 @@ class Room < ApplicationRecord
   validates_presence_of :minimal_bid
 
   # scopes
+  #--------------------------------------------------------------
   scope :active, -> { where("expires_at > ?", Time.now) }
   scope :by_remaining_time, -> { order(expires_at: :asc) }
 
   # instance methods
   #--------------------------------------------------------------
+
+  # is bid amount a winner?
+  def is_a_winner?(bid_amount)
+    bid_amount >= self.minimal_allowed_bid
+  end
 
   # update room details for the new winner
   def set_new_winner!(bid, user)
@@ -56,12 +62,6 @@ class Room < ApplicationRecord
   # has room any winner bid?
   def has_any_winner?
     self.winner_bid.positive?
-  end
-
-  # is bid a winner?
-  def is_a_winner?(bid_amount)
-    return true if self.winner_bid.zero?
-    bid_amount >= self.winner_bid * MINIMAL_INCREASE_BID
   end
 
   # publish some sample rooms for auctions
