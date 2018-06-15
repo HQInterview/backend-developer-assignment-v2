@@ -11,6 +11,7 @@
 #  winner_user_email :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
+#  amount_of_bids    :integer          default(0)
 #
 
 class Room < ApplicationRecord
@@ -38,6 +39,11 @@ class Room < ApplicationRecord
   # instance methods
   #--------------------------------------------------------------
 
+  # is room active to accept bids?
+  def active?
+    self.expires_at > Time.now
+  end
+
   # has room any winner bid?
   def has_any_winner?
     self.winner_bid.positive?
@@ -46,6 +52,15 @@ class Room < ApplicationRecord
   # is bid amount a winner?
   def is_a_winner?(bid_amount)
     bid_amount >= self.minimal_allowed_bid
+  end
+
+  # return the minimal allowed bid
+  def minimal_allowed_bid
+    if self.winner_bid.positive?
+      (self.winner_bid * MINIMAL_INCREASE_BID).to_i
+    else
+      self.minimal_bid
+    end
   end
 
   # update room details for the new winner
@@ -72,10 +87,22 @@ class Room < ApplicationRecord
     Faker::Number.between(10, 20).times do
       new_room = {
         name: "#{ROOM_TYPE.sample} in Hotel #{Faker::Company.name} (#{Faker::Address.city})",
-        expires_at: rand(5.minutes.from_now..10.minutes.from_now),
+        expires_at: rand(20.minutes.from_now..30.minutes.from_now),
         minimal_bid: Faker::Number.between(10, 50) * 100
       }
-      self.create new_room
+      room = self.create new_room
+      Faker::Number.between(5, 10).times do
+        amount = Faker::Number.between(10, 50) * 100
+        new_bid = {
+          amount: amount,
+          accepted: room.is_a_winner?(amount) ? true : false,
+          user_email: Faker::Internet.email,
+          user_id: 1
+        }
+        new_bid[:rejection_cause] = "Bid is not >= #{room.minimal_allowed_bid}" unless new_bid[:accepted]
+        bid = room.bids.create new_bid
+        room.update_attributes winner_bid: amount, winner_bid_id: bid.id, winner_user_email: new_bid[:user_email] if new_bid[:accepted]
+      end
     end
   end
 

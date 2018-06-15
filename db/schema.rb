@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_11_200015) do
+ActiveRecord::Schema.define(version: 2018_06_13_161932) do
+
+  create_table "bids", force: :cascade do |t|
+    t.integer "amount", null: false
+    t.boolean "accepted", default: true
+    t.string "rejection_cause"
+    t.string "user_email", null: false
+    t.integer "user_id"
+    t.integer "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_bids_on_created_at"
+    t.index ["room_id"], name: "index_bids_on_room_id"
+    t.index ["user_id"], name: "index_bids_on_user_id"
+  end
 
   create_table "rooms", force: :cascade do |t|
     t.string "name", null: false
@@ -45,6 +59,7 @@ ActiveRecord::Schema.define(version: 2018_06_11_200015) do
     t.string "last_login_from_ip_address"
     t.integer "failed_logins_count", default: 0
     t.datetime "lock_expires_at"
+    t.integer "amount_of_bids", default: 0
     t.index ["activation_code"], name: "index_users_on_activation_code"
     t.index ["email"], name: "index_users_on_email"
     t.index ["last_logout_at", "last_activity_at"], name: "index_users_on_last_logout_at_and_last_activity_at"

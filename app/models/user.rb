@@ -22,6 +22,7 @@
 #  last_login_from_ip_address      :string
 #  failed_logins_count             :integer          default(0)
 #  lock_expires_at                 :datetime
+#  amount_of_bids                  :integer          default(0)
 #
 
 class User < ApplicationRecord
@@ -34,6 +35,10 @@ class User < ApplicationRecord
   # authentication
   #--------------------------------------------------------------
   authenticates_with_sorcery!
+
+  # associations
+  #--------------------------------------------------------------
+  has_many :bids, dependent: :destroy
 
   # validations
   #--------------------------------------------------------------

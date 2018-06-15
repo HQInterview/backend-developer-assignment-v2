@@ -12,4 +12,15 @@ FactoryBot.define do
     minimal_bid { rand(10..50) * 100 }
   end
 
+  factory :bid do
+    accepted true
+    amount { rand(10..50) * 100 }
+    association :user, factory: :user
+    association :room, factory: :room
+
+    after(:build) do |bid|
+      bid.update_attribute :user_email, bid.user.email
+    end
+  end
+
 end

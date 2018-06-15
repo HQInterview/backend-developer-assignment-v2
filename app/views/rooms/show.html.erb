@@ -1,0 +1,45 @@
+<% title @room.name %>
+
+<h1 class="page-header"><%= yield :title %></h1>
+</br>
+<div class="row">
+  <div class="col-md-8">
+				<%= render_highest_bid_for(@room) %>
+		</div>
+  <div class="col-md-4 text-right">
+				<%= render_remaining_time(@room.expires_at) %>
+		</div>
+</div>
+</br>
+
+<% if @room.bids.empty? %>
+  <div><h5 class="text-red">Nobody posted bids for this Room</h5></div>
+		<% else %>
+		<div>
+  <table class="table table-sm" id="bids_table">
+    <thead>
+      <tr>
+  						<th scope="col">#</th>
+  						<th scope="col">User</th>
+								<th scope="col">Posted At</th>
+								<th scope="col">Rejection Cause</th>
+  						<th scope="col">Status</th>
+								<th scope="col">Bid</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @room.bids.each do |bid| %>
+        <tr scope="row" id="<%= dom_id(bid) %>">
+								  <td><%= bid.id %></td>
+								  <td><%= bid.user_email %></td>
+          <td><%= format_time(bid.created_at) %></td>
+										<td><%= bid.rejection_cause %></td>
+										<td><%= render_bid_status(bid.accepted) %></td>
+										<td><strong><%= bath_currency_for(bid.amount) %></strong></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+		</div>
+<% end %>
