@@ -1,11 +1,17 @@
 require "spec_helper"
+
+require "simplecov"
+# start Simplecov
+SimpleCov.start "rails" do
+  use_merging false
+end
+
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../../config/environment", __FILE__)
 
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 
 require "rspec/rails"
-require "simplecov"
 require "capybara/poltergeist"
 require "factories"
 require "capybara/rails"
@@ -55,11 +61,6 @@ RSpec.configure do |config|
       DatabaseCleaner.strategy = :transaction
     end
   end
-end
-
-# Simplecov configuration
-SimpleCov.start "rails" do
-  use_merging false
 end
 
 # Shoulda Matchers configuration
