@@ -26,4 +26,7 @@ Rails.application.routes.draw do
   resource :rooms, only: [] do
     post :publish
   end
+
+  resources :bids, only: [:create] do
+  end
 end

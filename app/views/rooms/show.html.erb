@@ -13,6 +13,20 @@
 </br>
 
 <% if @room.bids.empty? %>
+  <%= form_for Bid.new, html: {class: "form-inline"} do |f| %>
+    <%= f.hidden_field :room_id, value: @room.id, id: "bid_room_id" %>
+				<div class="form-group mb-2">
+				  <%= f.label :amount, "<strong>Place a Bid</strong>".html_safe %>
+				</div>
+				<div class="form-group mx-sm-3 mb-2">
+				  <%= f.text_field :amount, class: "form-control", placeholder: "must be >= #{bath_currency_for(@room.minimal_allowed_bid)}".html_safe, autofocus: "", id: "bid_amount" %>
+				</div>
+				<%= f.submit "Post Bid!", class: "btn btn-dark mb-2", id: "submit_bid" %>
+		<% end %>
+<% end %>
+</br>
+
+<% if @room.bids.empty? %>
   <div><h5 class="text-red">Nobody posted bids for this Room</h5></div>
 		<% else %>
 		<div>
