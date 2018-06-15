@@ -38,6 +38,11 @@ class Room < ApplicationRecord
   # instance methods
   #--------------------------------------------------------------
 
+  # has room any winner bid?
+  def has_any_winner?
+    self.winner_bid.positive?
+  end
+
   # is bid amount a winner?
   def is_a_winner?(bid_amount)
     bid_amount >= self.minimal_allowed_bid
@@ -58,11 +63,6 @@ class Room < ApplicationRecord
 
   # class methods
   #--------------------------------------------------------------
-
-  # has room any winner bid?
-  def has_any_winner?
-    self.winner_bid.positive?
-  end
 
   # publish some sample rooms for auctions
   def self.create_sample_rooms!
