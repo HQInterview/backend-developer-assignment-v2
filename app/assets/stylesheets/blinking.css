@@ -1,0 +1,67 @@
+.blinking {
+    animation-name: blinker;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+@-moz-keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+
+
+.blinking-once {
+    animation-name: blinker-once;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+
+    -webkit-animation-name: blinker-once;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+}
+
+@-moz-keyframes blinker-once {
+    0% { opacity: 1.0; }
+				40% { opacity: 1.0 }
+    50% { opacity: 0.0; }
+				60% { opacity: 1.0 }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker-once {
+    0% { opacity: 1.0; }
+				40% { opacity: 1.0 }
+    50% { opacity: 0.0; }
+				60% { opacity: 1.0 }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker-once {
+    0% { opacity: 1.0; }
+				40% { opacity: 1.0 }
+    50% { opacity: 0.0; }
+				60% { opacity: 1.0 }
+    100% { opacity: 1.0; }
+}
