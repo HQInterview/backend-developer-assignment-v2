@@ -42,7 +42,7 @@ class User < ApplicationRecord
   validates_format_of :email, with: EMAIL_REGEX, multiline: true
   validates_presence_of :password, :if => :password_required?
   validates_length_of :password, minimum: PASSWORD_LENGTH, :if => :password
-  validates_confirmation_of :password, message: "should match confirmation", :if => :password
+  validates_confirmation_of :password, message: "should match the password", :if => :password
 
   # instance methods
   #--------------------------------------------------------------
