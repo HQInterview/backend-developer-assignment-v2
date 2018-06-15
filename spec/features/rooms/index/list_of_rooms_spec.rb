@@ -25,15 +25,50 @@ RSpec.feature "rooms#index", type: :feature do
   end
 
   scenario "should update the fields in column Remaining time with Javascript", js: true do
-    room = create :room
+    room_1 = create :room, expires_at: 50.seconds.from_now
+    room_2 = create :room, expires_at: 63.seconds.from_now
+    room_3 = create :room, expires_at: 2.minutes.from_now
+    room_4 = create :room, expires_at: 3.seconds.from_now
 
     visit root_path
 
     within "#rooms_table" do
-      within "#room_#{room.id}" do
-        expect(page).to have_link room.name, href: room_path(room)
-        expect(page).to have_content room.minimal_bid
-        expect(page).to_not have_xpath "//span[@class='expiration-time-table hidden' and text()='#{time_in_milliseconds(room.expires_at)}']"
+      within "#room_#{room_1.id}" do
+        # if remaining time is less than 1 minute it should show countdown in red color and not blink
+        expect(page).to have_link room_1.name, href: room_path(room_1)
+        expect(page).to have_content room_1.minimal_bid
+        expect(page).to have_xpath "//span[@class='expiration-time-table text-red']"
+        expect(page).to_not have_xpath "//span[@class='expiration-time-table text-green hidden' and text()='#{time_in_milliseconds(room_1.expires_at)}']"
+        expect(page).to_not have_content time_in_milliseconds(room_1.expires_at)
+      end
+
+      within "#room_#{room_2.id}" do
+        # if remaining time is exactly 1 minute it should show countdown in red color and blink once
+        expect(page).to have_link room_2.name, href: room_path(room_2)
+        expect(page).to have_content room_2.minimal_bid
+        expect(page).to have_xpath "//span[@class='expiration-time-table blinking-once text-red']"
+        expect(page).to_not have_xpath "//span[@class='expiration-time-table text-green hidden' and text()='#{time_in_milliseconds(room_2.expires_at)}']"
+        expect(page).to_not have_content time_in_milliseconds(room_2.expires_at)
+        expect(page).to have_xpath "//span[@class='expiration-time-table text-red']"
+      end
+
+      within "#room_#{room_3.id}" do
+        # if remaining time is more than 1 minute it should show countdown in green color and not blink
+        expect(page).to have_link room_3.name, href: room_path(room_3)
+        expect(page).to have_content room_3.minimal_bid
+        expect(page).to have_xpath "//span[@class='expiration-time-table text-green']"
+        expect(page).to_not have_xpath "//span[@class='expiration-time-table text-green hidden' and text()='#{time_in_milliseconds(room_3.expires_at)}']"
+        expect(page).to_not have_content time_in_milliseconds(room_3.expires_at)
+      end
+
+      within "#room_#{room_4.id}" do
+        # if remaining time is less than 0 seconds it should show FINISHED message blue color and not blink
+        expect(page).to have_link room_4.name, href: room_path(room_4)
+        expect(page).to have_content room_4.minimal_bid
+        expect(page).to have_content "FINISHED"
+        expect(page).to have_xpath "//span[@class='expiration-time-table text-blue' and text()='FINISHED']"
+        expect(page).to_not have_xpath "//span[@class='expiration-time-table text-green hidden' and text()='#{time_in_milliseconds(room_4.expires_at)}']"
+        expect(page).to_not have_content time_in_milliseconds(room_4.expires_at)
       end
     end
   end
