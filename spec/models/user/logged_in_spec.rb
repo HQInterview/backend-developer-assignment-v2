@@ -8,6 +8,12 @@ RSpec.feature User, type: :feature do
       login_as_user user
       user.reload
       expect(user.logged_in?).to be true
+      visit "/logout"
+      user.reload
+      expect(user.logged_in?).to be false
+      login_as_user user
+      user.reload
+      expect(user.logged_in?).to be true
     end
   end
 end
