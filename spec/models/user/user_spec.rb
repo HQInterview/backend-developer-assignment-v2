@@ -4,7 +4,7 @@ RSpec.describe User, type: :model do
 
   it { should validate_presence_of :email }
   it { should validate_presence_of :password }
-  it { should validate_confirmation_of(:password).with_message("should match confirmation") }
+  it { should validate_confirmation_of(:password).with_message("should match the password") }
 
   it { should allow_value("user1@domain.com").for(:email) }
   it { should allow_value("user2@subdomain.domain2.es").for(:email) }
