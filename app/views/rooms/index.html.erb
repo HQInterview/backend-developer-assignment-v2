@@ -21,7 +21,7 @@
         <tr scope="row" id="<%= dom_id(room) %>">
           <td><%= link_to room.name, room_path(room), id: "link_to_#{dom_id(room)}" %></td>
   						  <td><%= room.minimal_bid %></td>
-  						  <td><%= winner_bid_cell(room.winner_bid) %></td>
+  						  <td><strong><%= show_if_positive(room.winner_bid) %></strong></td>
   						  <td><%= room.winner_user_email %></td>
   						  <td><span class="expiration-time-table hidden"><%= time_in_milliseconds(room.expires_at) %></span></td>
         </tr>
