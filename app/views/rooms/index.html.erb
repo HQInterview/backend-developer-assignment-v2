@@ -23,7 +23,7 @@
   						  <td><%= room.minimal_bid %></td>
   						  <td><strong><%= show_if_positive(room.winner_bid) %></strong></td>
   						  <td><%= room.winner_user_email %></td>
-  						  <td><span class="expiration-time-table hidden"><%= time_in_milliseconds(room.expires_at) %></span></td>
+  						  <td><span class="expiration-time-table text-green hidden"><%= time_in_milliseconds(room.expires_at) %></span></td>
         </tr>
       <% end %>
     </tbody>

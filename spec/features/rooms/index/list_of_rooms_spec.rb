@@ -14,12 +14,12 @@ RSpec.feature "rooms#index", type: :feature do
       within "#room_#{room_1.id}" do
         expect(page).to have_link room_1.name, href: room_path(room_1)
         expect(page).to have_content room_1.minimal_bid
-        expect(page).to have_xpath "//span[@class='expiration-time-table hidden' and text()='#{time_in_milliseconds(room_1.expires_at)}']"
+        expect(page).to have_xpath "//span[@class='expiration-time-table text-green hidden' and text()='#{time_in_milliseconds(room_1.expires_at)}']"
       end
       within "#room_#{room_2.id}" do
         expect(page).to have_link room_2.name, href: room_path(room_2)
         expect(page).to have_content room_2.minimal_bid
-        expect(page).to have_xpath "//span[@class='expiration-time-table hidden' and text()='#{time_in_milliseconds(room_2.expires_at)}']"
+        expect(page).to have_xpath "//span[@class='expiration-time-table text-green hidden' and text()='#{time_in_milliseconds(room_2.expires_at)}']"
       end
     end
   end
