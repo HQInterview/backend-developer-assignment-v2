@@ -26,7 +26,7 @@ RSpec.feature "User#register", type: :feature do
       expect(page).to_not have_content "Registration successfull. Check your email for activation instructions."
       expect(page).to have_content "Email is invalid"
       expect(page).to have_content "Password is too short (minimum is 8 characters)"
-      expect(page).to have_content "Password confirmation should match confirmation"
+      expect(page).to have_content "Password confirmation should match the password"
       expect(User.count).to be current_users
     end
   end

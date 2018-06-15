@@ -27,6 +27,12 @@ RSpec.feature "User#password_reset", type: :feature do
       user.reload
       visit edit_password_user_path user.reset_password_token
       fill_in "user_password",              with: newpass
+      fill_in "user_password_confirmation", with: "wrong password confirmation"
+      click_button "submit_user"
+
+      expect(page).to have_content "Password confirmation should match the password"
+
+      fill_in "user_password",              with: newpass
       fill_in "user_password_confirmation", with: newpass
       click_button "submit_user"
 
