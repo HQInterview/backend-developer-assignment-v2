@@ -13,6 +13,7 @@ app.ready ->
       $(timer).removeClass("blinking").removeClass("text-red").addClass("text-blue")
       $("#expiration_status").text("This Auction has ")
       $(timer).text "FINISHED"
+      $(".form-inline").remove()
       return
     return
   return
