@@ -48,7 +48,7 @@
 								  <td><%= bid.id %></td>
 								  <td><%= bid.user_email %></td>
           <td><%= format_time(bid.created_at) %></td>
-										<td><%= bid.rejection_cause %></td>
+										<td><%= bid.rejection_cause.html_safe unless bid.rejection_cause.nil? %></td>
 										<td><%= render_bid_status(bid.accepted) %></td>
 										<td><strong><%= bath_currency_for(bid.amount) %></strong></td>
         </tr>
