@@ -41,34 +41,31 @@ class Bid < ApplicationRecord
 
   # post a bid in a room
   def self.post_bid(bid, user)
-    result = {}
+    url_helpers = Rails.application.routes.url_helpers
+    result = {redirection_path: url_helpers.rooms_path}
     begin
+      if Room.where(id: bid.room_id).empty?
+        result[:exception] = "Bid cannot be posted cause the room acution doesn't exist"
+        return
+      end
       room = Room.find(bid.room_id)
-      result[:redirection_path] = Rails.application.routes.url_helpers.room_path(room)
-      if bid.valid?
-        # check if bid is posted on time
-        if Time.now >= room.expires_at
-          bid.accepted = false
-          bid.rejection_cause = "Bid posted out of time" unless bid.accepted
-          bid.save
-          return
-        end
-        # check if bid is a new winner
-        bid.accepted = room.is_a_winner?(bid.amount)
-        bid.rejection_cause = "Bid is not >= #{room.minimal_allowed_bid}" unless bid.accepted
-      else
-        # if the bid posted is not valid (not a number, a float value...)
+      result[:redirection_path] = url_helpers.room_path(room)
+      if bid.invalid? # check if the bid is not valid (not a number, a float value...)
         bid.accepted = false
         bid.amount = 0
         bid.rejection_cause = bid.errors.full_messages.join(", ")
+      elsif Time.now >= room.expires_at
+        bid.accepted = false
+        bid.rejection_cause = "Bid posted out of time" unless bid.accepted
+      else
+        bid.accepted = room.is_a_winner?(bid.amount)
+        bid_not_winner_message = "Bid is not >= #{ApplicationController.helpers.bath_currency_for(room.minimal_allowed_bid)}"
+        bid.rejection_cause = bid_not_winner_message unless bid.accepted
       end
       bid.save
       room.set_new_winner!(bid, user) if bid.accepted
     rescue Exception => error
-      bid.accepted = false
-      bid.rejection_cause = error.message
-      bid.save
-      result[:exception] = true
+      result[:exception] = error.message
     ensure
       return result
     end
