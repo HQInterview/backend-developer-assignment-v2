@@ -12,7 +12,7 @@
 </div>
 </br>
 
-<% if @room.bids.empty? %>
+<% if @room.active? %>
   <%= form_for Bid.new, html: {class: "form-inline"} do |f| %>
     <%= f.hidden_field :room_id, value: @room.id, id: "bid_room_id" %>
 				<div class="form-group mb-2">
