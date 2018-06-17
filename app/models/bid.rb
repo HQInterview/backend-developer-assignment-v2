@@ -15,8 +15,9 @@
 
 class Bid < ApplicationRecord
 
-  # constants
+  # contants
   #--------------------------------------------------------------
+  BIDS_PER_PAGE = 10.freeze
 
   # associations
   #--------------------------------------------------------------

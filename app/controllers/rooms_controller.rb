@@ -8,6 +8,7 @@ class RoomsController < ApplicationController
 
   def show
     @room = Room.includes(:bids).find(params[:id])
+    @bids = Bid.where(room_id: @room.id).page(params[:page]).per_page(Bid::BIDS_PER_PAGE)
   end
 
   def publish

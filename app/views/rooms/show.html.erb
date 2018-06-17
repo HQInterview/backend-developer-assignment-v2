@@ -1,7 +1,7 @@
 <% title @room.name %>
 
-<h1 class="page-header"><%= yield :title %></h1>
-</br>
+<h1 class="page-header text-gray"><%= yield :title %></h1>
+
 <div class="row">
   <div class="col-md-8">
 				<%= render_highest_bid_for(@room) %>
@@ -24,7 +24,6 @@
 				<%= f.submit "Post Bid!", class: "btn btn-dark mb-2", id: "submit_bid" %>
 		<% end %>
 <% end %>
-</br>
 
 <% if @room.bids.empty? %>
   <div><h5 class="text-red">Nobody posted bids for this Room</h5></div>
@@ -43,7 +42,7 @@
     </thead>
 
     <tbody>
-      <% @room.bids.each do |bid| %>
+      <% @bids.each do |bid| %>
         <tr scope="row" id="<%= dom_id(bid) %>">
 								  <td><%= bid.id %></td>
 								  <td><%= bid.user_email %></td>
@@ -55,5 +54,6 @@
       <% end %>
     </tbody>
   </table>
+		<%= will_paginate @bids %>
 		</div>
 <% end %>
