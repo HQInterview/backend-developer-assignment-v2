@@ -1,0 +1,3 @@
+PUSHER_APP_ID: "your_pusher_app_id"
+PUSHER_KEY: "your_pusher_key"
+PUSHER_SECRET: "your_pusher_secret"

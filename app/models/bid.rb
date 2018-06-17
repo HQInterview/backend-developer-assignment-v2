@@ -34,8 +34,17 @@ class Bid < ApplicationRecord
   #--------------------------------------------------------------
   default_scope -> { order(created_at: :desc) }
 
+  # callbacks
+  #--------------------------------------------------------------
+  after_create :send_pusher_event
+
   # instance methods
   #--------------------------------------------------------------
+
+  # send an event to Pusher (real time update room auction)
+  def send_pusher_event
+    pusher_client.trigger("auctions", "new_bid_in_room_#{self.room_id}", self.to_json)
+  end
 
   # class methods
   #--------------------------------------------------------------

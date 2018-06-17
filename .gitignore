@@ -34,3 +34,6 @@
 
 # Ignore coverage files
 /coverage/*
+
+# Ignore personal files
+application.yml
