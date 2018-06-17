@@ -14,8 +14,9 @@
 //= require activestorage
 //= require popper.min
 //= require jquery-3.3.1.min
-//= require bootstrap.bundle.min
-//= require bootstrap.min
+//= require bootstrap-4.1.1.bundle.min
+//= require bootstrap-4.1.1.min
 //= require fakeTurbolinks
 //= require jquery.countdown.min
+//= require pusher-4.1.min
 //= require_tree .
