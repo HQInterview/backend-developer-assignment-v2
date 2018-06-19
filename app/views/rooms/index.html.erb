@@ -1,0 +1,31 @@
+<% title "Welcome to Hotels Rooms Auctions" %>
+
+<h1 class="page-header"><%= yield :title %></h1>
+
+<% if @rooms.empty? %>
+  <%= link_to("Create Sample Data", publish_rooms_path, method: :post, class: "btn btn-dark", id: "publish_rooms") %>
+<% else %>
+  <table class="table table-sm table-striped" id="rooms_table">
+    <thead>
+      <tr>
+  						<th scope="col">Hotel Room</th>
+  						<th scope="col">Minimal Bid</th>
+  						<th scope="col">Winner Bid</th>
+  						<th scope="col">Winner User</th>
+  						<th scope="col">Remaining Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @rooms.each do |room| %>
+        <tr scope="row" id="<%= dom_id(room) %>">
+          <td><%= link_to room.name, room_path(room), id: "link_to_#{dom_id(room)}" %></td>
+  						  <td><%= bath_currency_for(room.minimal_bid) %></td>
+  						  <td><strong><%= show_if_positive(room.winner_bid) %></strong></td>
+  						  <td><%= room.winner_user_email %></td>
+  						  <td><span class="expiration-time-table text-green hidden"><%= time_in_milliseconds(room.expires_at) %></span></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

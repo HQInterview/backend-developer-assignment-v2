@@ -1,0 +1,94 @@
+<% title @room.name %>
+
+<h1 class="page-header text-gray"><%= yield :title %></h1>
+
+<div class="row">
+  <div class="col-md-8">
+				<%= render_highest_bid_for(@room) %>
+		</div>
+  <div class="col-md-4 text-right">
+				<%= render_remaining_time(@room.expires_at) %>
+		</div>
+</div>
+</br>
+
+<% if @room.active? %>
+  <%= form_for Bid.new, html: {class: "form-inline"} do |f| %>
+    <%= f.hidden_field :room_id, value: @room.id, id: "bid_room_id" %>
+				<div class="form-group mb-2">
+				  <%= f.label :amount, "<strong>Place a Bid</strong>".html_safe %>
+				</div>
+				<div class="form-group mx-sm-3 mb-2">
+				  <%= f.text_field :amount, class: "form-control", placeholder: "must be >= #{bath_currency_for(@room.minimal_allowed_bid)}".html_safe, autofocus: "", id: "bid_amount" %>
+				</div>
+				<%= f.submit "Post Bid!", class: "btn btn-dark mb-2", id: "submit_bid" %>
+		<% end %>
+<% end %>
+
+<% if @room.bids.empty? %>
+  <div><h5 class="text-red">Nobody posted bids for this Room</h5></div>
+		<% else %>
+		<div>
+  <table class="table table-sm" id="bids_table">
+    <thead>
+      <tr>
+  						<th scope="col">#</th>
+  						<th scope="col">User</th>
+								<th scope="col">Posted At</th>
+								<th scope="col">Rejection Cause</th>
+  						<th scope="col">Status</th>
+								<th scope="col">Bid</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @bids.each do |bid| %>
+        <tr scope="row" id="<%= dom_id(bid) %>">
+								  <td><%= bid.id %></td>
+								  <td><%= bid.user_email %></td>
+          <td><%= format_time(bid.created_at) %></td>
+										<td><%= bid.rejection_cause.html_safe unless bid.rejection_cause.nil? %></td>
+										<td><%= render_bid_status(bid.accepted) %></td>
+										<td><strong><%= bath_currency_for(bid.amount) %></strong></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+		<%= will_paginate @bids %>
+		</div>
+<% end %>
+
+<script>
+  <% if defined?(PusherFake) %>
+  var pusherInstance = <%== PusherFake.javascript %>
+		<% else %>
+  var pusherInstance = new Pusher("<%= ENV['PUSHER_KEY'] %>", {
+    wsHost: "ws.pusherapp.com",
+    httpHost: "sockjs.pusher.com",
+    encrypted: true
+  });
+  <% end %>
+
+  var roomId = <%= @room.id %>
+
+  if (pusherInstance.connection.state === "connected") {
+    console.log("new connection to Pusher created!");
+  }
+
+  var channel = pusherInstance.subscribe("auctions");
+
+  if (channel.name === "auctions" && channel.subscribed === true) {
+    console.log("Pusher subscribed to channel 'auctions'");
+  }
+
+  var event = "new_bid_in_room_" + roomId;
+
+  channel.bind(event, function(data) {
+    console.log("received event for channel 'update_url_latest' with data", data);
+    window.location.reload(true);
+  });
+
+  if (channel.callbacks._callbacks["_" + event] !== void 0) {
+    console.log("Pusher channel 'auctions' binded to events '" + event + "'");
+  }
+</script>

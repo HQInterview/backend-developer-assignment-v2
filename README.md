@@ -32,7 +32,7 @@ RoomsQuickly has hundred of partners willing to participate and post bids: websi
 * architecture (components, areas of responsibility)
 * complexity (easier to understand code is better)
 * unit/integration/end2end tests
+=======
 * resolution for all challenges
-
 
 

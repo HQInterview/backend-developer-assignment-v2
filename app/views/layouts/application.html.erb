@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Auctions - <%= content_for(:title) %></title>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    "application", media: "all" %>
+    <%= javascript_include_tag "application" %>
+  </head>
+
+  <body>
+				<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
+						<%= link_to "Auctions", root_path, class: "navbar-brand" %>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+						</button>
+
+						<div class="collapse navbar-collapse" id="navbar">
+								<ul class="navbar-nav mr-auto">
+								</ul>
+								<ul class="navbar-nav" id="navbarUser">
+										<% if logged_in? %>
+	           <li class="nav-item nav-link active">logged as: <%= current_user.email %></li>
+	           <li class="nav-item"><%= link_to "Logout", logout_path, id: "logout", class: "nav-link" %></li>
+										<% else %>
+						      <li class="nav-item"><%= link_to "Register", register_path, id: "register", class: "nav-link" %></li>
+	           <li class="nav-item"><%= link_to "Login", login_path, id: "login", class: "nav-link" %></li>
+										<% end %>
+        </ul>
+						</div>
+				</nav></br></br></br>
+
+				<div class="container">
+						<% if notice.present? %>
+        <div class="alert alert-success"><%= notice %></div>
+						<% end %>
+
+						<% if alert.present? %>
+        <div class="alert alert-danger"><%= alert %></div>
+						<% end %>
+
+						<%= yield %>
+				</div>
+  </body>
+</html>
